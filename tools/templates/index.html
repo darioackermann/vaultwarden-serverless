@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vaultwarden-serverless tools</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <style>
+        .navhide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>vaultwarden-serverless tools</h1>
+    <nav>
+        <a class="nav-item" data-show="home">Home</a>
+        <a class="nav-item" data-show="import">Import</a>
+        <a class="nav-item" data-show="export">Export</a>
+        <a class="nav-item" data-show="other">Other</a>
+        <a class="nav-item" data-show="files">File List</a>
+        <a class="nav-item" data-show="config">Config</a>
+        <a class="nav-item" href="logout">Logout</a>
+    </nav>
+</header>
+
+<main>
+
+    <div id="home" class="navhide" style="display: block">
+        Welcome to vaultwarden-serverless tools. Select a menu point to get started.
+    </div>
+
+    <div id="import" class="navhide">
+        <h3>Import</h3>
+
+        <p class="notice"><b>Warning:</b> Please be aware that replacing files does not restart lambdas, i.e. there might be lambdas running with an old config file.
+            You can set a fixed concurrency of 0 and wait until the service is unavailable, and revert the setting after to ensure that new lambdas are started.</p>
+
+
+        <form id="upload">
+            <p>zip-Files only. Uploaded file will be extracted at root directory, existing files overwritten.</p>
+            <input type="file" required id="file" accept=".zip">
+            <input type="submit" value="Upload">
+        </form>
+    </div>
+
+    <div id="export" class="navhide">
+        <h3>Export</h3>
+        <p>This can take a moment - <a href="export">Export all files as zip</a>
+        </p>
+    </div>
+
+
+    <div id="other" class="navhide">
+        <h3>Destructive actions</h3>
+        <h4>Delete a single path</h4>
+
+        <form>
+            <p>
+                <label for="delete_path">Path to delete (relative to data root)</label>
+                <input type="text" id="delete_path" placeholder="">
+            </p>
+            <input type="submit">
+
+        </form>
+    </div>
+
+    <div id="files" class="navhide">
+        <h3>Current files</h3>
+        <pre>param_files</pre>
+    </div>
+
+    <div id="config" class="navhide">
+        <h3>Config</h3>
+        <ul>
+            <li>BUCKET_NAME: param_bucket_name</li>
+            <li>DATA_PATH: param_data_path</li>
+            <li>RSA_KEY_FILENAME: param_rsa_key_filename</li>
+        </ul>
+    </div>
+
+
+</main>
+
+<footer>
+    version 0.1 - provided by <a href="http://github.com/darioackermann/vaultwarden-serverless" target="_blank">darioackermann/vaultwarden-serverless</a>
+</footer>
+
+<script>
+    function changeBox(event) {
+        document.querySelectorAll('.navhide').forEach(el => el.style.display = 'none')
+        document.querySelector(`#${event.target.dataset.show}`).style.display = 'block'
+
+    }
+    function handleFormSubmit(event) {
+        event.preventDefault();
+
+        fetch('get_presigned_url')
+            .then(response => response.json())
+            .then(data => {
+
+                let form = new FormData();
+                Object.keys(data.fields).forEach(key => form.append(key, data.fields[key]))
+                form.append('file', document.getElementById('file').files[0])
+
+                // Make the POST request
+                fetch(data.url, {
+                    method: 'POST',
+                    body: form
+                })
+                    .then(response => {
+                        window.location.href = 'import'
+                    })
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    document.getElementById('upload').addEventListener('submit', handleFormSubmit);
+    document.querySelectorAll('.nav-item').forEach(box => box.addEventListener('click', changeBox))
+</script>
+
+</body>
+</html>
