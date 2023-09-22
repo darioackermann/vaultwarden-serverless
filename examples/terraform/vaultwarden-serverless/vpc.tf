@@ -29,9 +29,21 @@ resource "aws_default_route_table" "rtb" {
   }
 }
 
-# TODO: Add EIP and attach to ENI
-#resource "aws_eip" "eip" {
-#  domain = "vpc"
-#  network_interface =
-#  associate_with_private_ip = ""
-#}
+data "aws_network_interface" "lambda_eni" {
+  filter {
+    name   = "interface-type"
+    values = ["lambda"]
+  }
+  filter {
+    name   = "group-id"
+    values = [aws_security_group.lambda_sg.id]
+  }
+
+  depends_on = [aws_lambda_function.vaultwarden_function]
+}
+
+resource "aws_eip" "eip" {
+  domain                    = "vpc"
+  network_interface         = data.aws_network_interface.lambda_eni.id
+  associate_with_private_ip = data.aws_network_interface.lambda_eni.private_ip
+}

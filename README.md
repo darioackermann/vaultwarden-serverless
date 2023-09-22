@@ -4,7 +4,6 @@ Welcome to vaultwarden-serverless, providing you with the power to host your fav
 
 ## ⚠️ Warning - WIP ⚠️
 Todo to get a first version that can be released to the public
-- [ ] Automatically attach ElasticIP to Lambda ENI
 - [ ] Fix MySQL Linking
 - [ ] Verify sqlite corruption issues
 

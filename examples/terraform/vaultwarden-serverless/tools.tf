@@ -86,7 +86,7 @@ resource "aws_lambda_function" "exporter" {
   role             = aws_iam_role.exporter_role.arn
   runtime          = "python3.10"
   handler          = "tools.handler"
-  memory_size      = 512
+  memory_size      = 256
   timeout          = 30
   layers           = [aws_lambda_layer_version.layer.arn]
   file_system_config {
