@@ -21,7 +21,7 @@ CMD \
   # Get latest web-vault release
   curl -s -L $(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest | \
             jq -r '.assets[] | select(.name | endswith ("tar.gz")) | .browser_download_url') | tar xz && \
-   # Build vaultwarden for al2
+  # Build vaultwarden for al2
   cargo build --features "$FEATURES" --target-dir target_al2 $CARGOFLAGS && \
   # Move built file and call it bootstrap
   mv target_al2/release/vaultwarden bootstrap && \
@@ -30,7 +30,7 @@ CMD \
   size bootstrap && \
   ldd  bootstrap && \
   # Copy shared libraries (postgres, mysql)
-  mkdir lib && \
+  mkdir -p lib && \
     cp /usr/lib64/mysql/libmysqlclient.so lib/libmysqlclient.so.18 && \
     cp /usr/lib64/libpq.so lib/libpq.so.5 && \
   zip -9 -r bootstrap.zip bootstrap web-vault lib
