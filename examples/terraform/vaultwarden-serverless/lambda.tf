@@ -59,6 +59,7 @@ resource "aws_lambda_function" "vaultwarden_function" {
   }
   depends_on = [
     aws_cloudwatch_log_group.function_log_group,
+    aws_efs_mount_target.fs
   ]
   vpc_config {
     subnet_ids         = [aws_subnet.public.id]
