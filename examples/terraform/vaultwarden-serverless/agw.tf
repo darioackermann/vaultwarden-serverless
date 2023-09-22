@@ -82,6 +82,10 @@ resource "aws_apigatewayv2_api_mapping" "mapping" {
   stage       = aws_apigatewayv2_stage.stage.id
 }
 
-output "api_gateway_endpoint" {
+output "api_gateway_cname_target" {
   value = aws_apigatewayv2_domain_name.domainname.domain_name_configuration[0].target_domain_name
+}
+
+output "api_gateway_invocation_url" {
+  value = aws_apigatewayv2_stage.stage.invoke_url
 }

@@ -2,9 +2,19 @@
 
 Welcome to vaultwarden-serverless, providing you with the power to host your favorite password manager on serverless AWS infrastructure, at almost no cost!
 
+---
+![AWS](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
+![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)  
+![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
+
+vaultwarden-serverless is based on [vaultwarden](https://github.com/dani-garcia/vaultwarden)
+
+---
+
 ## ⚠️ Warning - WIP ⚠️
 Todo to get a first version that can be released to the public
-- [ ] Fix MySQL Linking
 - [ ] Verify sqlite corruption issues
 
 ## AWS Bootstrap File
@@ -77,4 +87,5 @@ Your contribution is gladly appreciated. Please feel free to open issues and pul
 
 ##  Sponsoring ❤️
 
-I'm a student maintaining this project in my freetime. If it helps you keeping your monthly costs down, I'd appreciate a one-time tip or monthly support to keep my free work going. Thanks a lot ❤️
+I'm a student maintaining this project in my freetime. If it helps you keeping your monthly costs down, I'd appreciate a one-time tip or monthly support to keep my free work going. Thanks a lot ❤️  
+[![Sponsor me](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/darioackermann)
