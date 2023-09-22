@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vaultwarden-serverless tools</title>
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         .navhide {
             display: none;
@@ -18,7 +19,6 @@
         <a class="nav-item" data-show="home">Home</a>
         <a class="nav-item" data-show="import">Import</a>
         <a class="nav-item" data-show="export">Export</a>
-        <a class="nav-item" data-show="other">Other</a>
         <a class="nav-item" data-show="files">File List</a>
         <a class="nav-item" data-show="config">Config</a>
         <a class="nav-item" href="logout">Logout</a>
@@ -51,20 +51,6 @@
         </p>
     </div>
 
-
-    <div id="other" class="navhide">
-        <h3>Destructive actions</h3>
-        <h4>Delete a single path</h4>
-
-        <form>
-            <p>
-                <label for="delete_path">Path to delete (relative to data root)</label>
-                <input type="text" id="delete_path" placeholder="">
-            </p>
-            <input type="submit">
-
-        </form>
-    </div>
 
     <div id="files" class="navhide">
         <h3>Current files</h3>

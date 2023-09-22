@@ -34,6 +34,12 @@ resource "aws_apigatewayv2_route" "exporter" {
   target    = "integrations/${aws_apigatewayv2_integration.export_handler.id}"
 }
 
+resource "aws_apigatewayv2_route" "exporter_alt" {
+  api_id    = aws_apigatewayv2_api.vaultwarden.id
+  route_key = "ANY /tools"
+  target    = "integrations/${aws_apigatewayv2_integration.export_handler.id}"
+}
+
 resource "aws_apigatewayv2_integration" "export_handler" {
   api_id                 = aws_apigatewayv2_api.vaultwarden.id
   integration_type       = "AWS_PROXY"

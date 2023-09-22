@@ -140,12 +140,30 @@ def export_zip():
     }
 
 
+def render_favicon():
+    return {
+        "statusCode": 200,
+        "headers": {"Content-type": "image/x-icon"},
+        "isBase64Encoded": True,
+        "body": base64.b64encode(open("favicon.ico", "rb").read()).decode(),
+    }
+
+
 def handler(event, context):
 
     try:
-        resource = event.get("pathParameters").get("proxy")
+        resource = event.get("pathParameters", {}).get("proxy")
 
-        if not resource.startswith("login"):
+        # accessed over non-trailing-slash
+        if resource is None:
+            return {
+                "statusCode": 302,
+                "headers": {
+                    "Location": "tools/"
+                }
+            }
+
+        if not resource.startswith("login") and resource != "favicon.ico":
 
             private_key_path = "{}/{}.pem".format(DATA_PATH, RSA_KEY_FILENAME)
             public_key_path = "{}/{}.pub.pem".format(DATA_PATH, RSA_KEY_FILENAME)
@@ -196,6 +214,8 @@ def handler(event, context):
 
         if resource == "":
             return render_overview()
+        elif resource == "favicon.ico":
+            return render_favicon()
         elif resource.startswith("login"):
             method = event.get("requestContext").get("http").get("method")
             if method == "POST":
@@ -221,7 +241,3 @@ def handler(event, context):
             "headers": {"Content-type": "application/json"},
             "body": json.dumps({"error": "An exception occured", "exception": str(e)}),
         }
-
-
-if __name__ == "__main__":
-    print(handler({"pathParameters": {"proxy": ""}}, None))
