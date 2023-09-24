@@ -13,24 +13,28 @@ vaultwarden-serverless is based on [vaultwarden](https://github.com/dani-garcia/
 
 ---
 
-## Table of contents
+# Table of contents
+
+- [Table of contents](#table-of-contents)
+- [Known issues 🐛](#known-issues-)
+- [Install / Build 💿](#install--build-)
+  - [From releases 📁](#from-releases-)
+  - [Build it yourself 💻](#build-it-yourself-)
+- [Deployment (with Terraform) ☁️](#deployment-with-terraform-)
+  - [Notes 🗒️](#notes-)
+  - [Config values ⚙️](#config-values-)
+  - [Deployed functionality 📱](#deployed-functionality-)
+  - [Change DB backend 🗄️](#change-db-backend-)
+- [Manual Deployment 👷](#manual-deployment-)
+- [Tools 🛠️](#tools-)
+- [Contributing 🐱‍👤](#contributing-)
+- [Sponsoring ❤️](#sponsoring-)
 
 
-- [Install / Build 💿](#install---build---)
-    * [From releases 📁](#from-releases---)
-    * [Build it yourself 💻](#build-it-yourself---)
-- [Known issues 🐛](#known-issues---)
-- [Deployment (with Terraform) ☁️](#deployment--with-terraform----)
-    * [Notes 🗒️](#notes----)
-    * [Config values ⚙️](#config-values---)
-    * [Deployed functionality 📱](#deployed-functionality---)
-    * [Change DB backend 🗄️](#change-db-backend----)
-- [Manual Deployment 👷](#manual-deployment---)
-- [Tools 🛠️](#tools----)
-- [Contributing 🐱‍👤](#contributing------)
-- [Sponsoring ❤️](#sponsoring---)
+## Known issues 🐛
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+- **Integration with SQLite can fail you at random times**: Due to concurrency, in unlucky events, multiple parallel actions (e.g. logins, registrations) etc. might lead to a database lockup preventing you temporairily from logging in /
+using your vaultwarden. So far, **no corrupted db's have been observed**, however you'll be locked out until lambda instances get replaced. Please see https://github.com/darioackermann/vaultwarden-serverless/pull/1#issuecomment-1732654356 and https://github.com/darioackermann/vaultwarden-serverless/issues/2#issue-1909470641
 
 ## Install / Build 💿
 
